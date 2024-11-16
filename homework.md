@@ -83,12 +83,15 @@ As earlier said, ssh can also be used for `tunnelling`. Just as the name suggest
 ```
 Here, I create a local tunnel `(-L)` from my machine towards the `github.com` port `80` using the *SSH process* running on `desmond@10.39.78.208`. Now if I connect to `localhost:7000` on my machine, the request will be tunnels through `10.39.78.208` toward `github.com` port `80`. You can try it with curl `localhost:7000`.
 That is, the entrance of the tunnel is `:7000` (on my computer) and exit is `:80`. This is called **Local port tunnelling**.
+
 We also have the **Remote Port tunnelling**. In remote port tunnelling (or reverse port forwarding) the traffic coming on a port on the remote server is forwarded to the SSH process running on your local host, and from there to the specified port on the destination server (which may also be your local machine).Let's have an example:
 ```sh
 -> ~ ssh -R 7575:localhost:80 -Nf desmond@192.168.0.171
 ```
-Here, I'm telling *ssh* to create a **Remote**tunnel. After this, any request on port `:7575` from `Desmond`'s computer will reach to local host (my machine) on port `:80`. This is useful when you want to let someone from outside your network access a service running on your local host machine.
+Here, I'm telling *ssh* to create a **Remote** tunnel. After this, any request on port `:7575` from `Desmond`'s computer will reach to local host (my machine) on port `:80`. This is useful when you want to let someone from outside your network access a service running on your local host machine.
+
 **-N**: No login, just do the port forwarding(tunnel).
+
 **f**: run *ssh* in the background.
 
 Now that we know about local and remote port tunnelling, it will be easier to talk about **X11 Tunnels**. Through an X11 tunnel, the X Window System on the remote host is forwarded to your local machine. To forward the X, its enough to add a `-X` to your ssh. Please note that the `X11Forwarding yes` configuration should be present in your **sshd_config** file.
