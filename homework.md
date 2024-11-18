@@ -4,12 +4,12 @@
    **Data encrytion converts data from readable plaintext into an unreable encoded format: ciphertext**.
    There are two types of data encryption:
    - Symmetric data encryption and
-   - Asymetric data encryption
-   ## Symmetric and Asymetric data encryption
+   - Asymmetric data encryption
+   ## Symmetric and Asymmetric data encryption
    In the old times and even now, many people used symmetric encryption.
    We had a brief view of what this was all about with Carrie Anne. In simpler words:
    - **symmetric** encryption, symmetric keys were used: both parties had a shared password. The data were encrypted with that password and then decrypted using the same password. 
- - **Asymetric** encryption was a better approach to data security, since it had to do with the notion of `key pairs`.When we talk of key pairs, we are talking of `public` and `private` keys. 
+ - **Asymmetric** encryption was a better approach to data security, since it had to do with the notion of `key pairs`.When we talk of key pairs, we are talking of `public` and `private` keys. 
  Whatever I lock with a private key can only be unlocked with a public key and vice-versa.
    ## SSH Keys
    SSH(Security SHell) is a network communication protocol that enables two computers to communicate and share data. SSH provides a secure encrypted connection between two hosts over an insecure network. It does this via `key pairs`. 
@@ -113,7 +113,7 @@ GPG is a free version of PGP. It can be used to *create keys*, *encrypt data*, *
  - `opengp-revocs.d`: The revocation certificate that was created along with the key pair is kept here. The permissions on this directory are quite restrictive as anyone who has access to the certificate could revoke the key.
 - `private-keys-v1.d`: This is the directory that keeps your private keys, therefore permissions are restrictive.
 - `pubring.kbx`: This is your public keyring. It stores your own as well as any other imported public keys.
-- `trustdb.gpg`: he trust database. This has to do with the concept of Web of Trust(for more details, google is our friend ;)).
+- `trustdb.gpg`: the trust database. This has to do with the concept of Web of Trust(for more details, google is our friend ;)).
  You can now view your public keys:
  ```sh
  -> ~ gpg --list-keys
@@ -138,11 +138,11 @@ GPG is a free version of PGP. It can be used to *create keys*, *encrypt data*, *
  -> ~ scp maxwell.pub.key desmond@10.39.77.8
  ```
  *Desmond* is now in the possession of `maxwell.pub.key`. He will use it to encrypt a file and send it to `maxwell` in the next section.
- If it happens that my private key gets compromised, you have to create a **revoke** file and share it with others to tell them that your private key is not valid anymore:
+ If it happens that my private or public key gets compromised, you have to create a **revoke** file and share it with others to tell them that your private or public key is not valid anymore:
 ```sh
 -> ~ gpg --output maxwell.revoke.asc --gen-revoke maxwellele.@gmail.com
 ```
-This tells gpg to create a *revoke file* called `maxwell.revoke.asc` for the identity *maxwellele@gmail.com*. If *maxwellele@gmail.com* needs to invalidate his private key, he has to publish this file to the Internet or key servers and others will know that the previous public key is not valid anymore since the associated private key was compromised.
+This tells gpg to create a *revoke file* called `maxwell.revoke.asc` for the identity *maxwellele@gmail.com*. If *maxwellele@gmail.com* needs to invalidate his private or public key, he has to publish this file to the Internet or key servers and others will know that the previous public key is not valid anymore since the associated private key was compromised.
 
 #### Encrypting and Decrypting files.
 Since *desmond* has already imported *Maxwell*'s key, *desmond* can now send private data to *Maxwell*:
@@ -161,7 +161,7 @@ Desmond used Maxwell's Public key to encrypt and then Maxwell used his own Priva
 
 Please remember that only Maxwell has access to his private key. So if Maxwell applies it to a file, every one:
 
-   - will be able to open the file using his Public Key
+   - will be able to open the file using his Public Key.
   - Will be sure that Maxwell has signed this because he is the only one having access to the private key of the public key they used to open the file.
 
 Let's sign a message:
@@ -185,6 +185,8 @@ If they want to make sure that it is truely comming from Maxwell, it's enough fo
  #### gpg-agent
  Just like the **ssh-agent**, **gpg-agent** is a tool(daemon) which acts like a password manager for your gpg keys. It keeps the keys in the memory so you won't need to provide password on every single use. 
  - To view a summary of the most useful options, run `gpg-agent --help` or `gpg-agent -h`.
+
+ - The Web of Trust (WOT) is a cryptographic concept that allows users to authenticate the connection between a public key and its owner
 
 This marks the end of **Security and Data Encryption**
 
