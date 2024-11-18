@@ -30,6 +30,13 @@ bash:~$ sudo fuser 22/tcp  -v
 22/tcp: root          1 F.... systemd
         root       1868 F.... sshd
 ```
+The resultsl are self explainatory, but let's talk about the ACCESS culumn, here are the type of access:
+- c:  Current directory.
+- e: Executable being run.
+- f: Open file (omitted in default display mode).
+- F: Open file for writing (omitted in default display mode).
+- r: root directory.
+
 * *Using `lsof`*: 
 &nbsp; &nbsp; &nbsp; &nbsp;It stands for “list open files”. It has many switches to deal with different file types and usecases such as: `-u` for specified user, `-c` for files opened by a particular process name, `-P` for process id or port number... But we'll mostly use the `-i` for  listing information about open Internet sockets.
 Running the following will list all open files in the computer system.
@@ -77,7 +84,7 @@ Local host (192.168.64.10) on port 22 (SSH) and Remote host (192.168.64.1) on po
 > Using nmap(network mapper)
 - To scan our local device:
 ```bash
-nmap localhost
+bash:~$ nmap localhost
 ```
 
 - Scanning for port range in remote server
@@ -163,48 +170,3 @@ And disabled with:
 ```bash
  bash:~$ sudo systemctl disable <service-name> --now
 ```
-
-#### Limits on Users computer  resources
-This is mainly conncerned with the management of system resources is especially important when dealing with a system having multiple users.
-These limits can be described as `soft(S)` or `hard(H)` and are managed with `ulimit`.
-The `-a` flag can be used to list all resources, i.e.
-
-```bash
-bash:~$ ulimit -a # for both soft and hard limits
-real-time non-blocking time  (microseconds, -R) unlimited
-core file size              (blocks, -c) 0
-data seg size               (kbytes, -d) unlimited
-scheduling priority                 (-e) 0
-file size                   (blocks, -f) unlimited
-pending signals                     (-i) 15468
-max locked memory           (kbytes, -l) 499960
-max memory size             (kbytes, -m) unlimited
-open files                          (-n) 1024
-pipe size                (512 bytes, -p) 8
-POSIX message queues         (bytes, -q) 819200
-real-time priority                  (-r) 0
-stack size                  (kbytes, -s) 8192
-cpu time                   (seconds, -t) unlimited
-max user processes                  (-u) 15468
-virtual memory              (kbytes, -v) unlimited
-file locks                          (-x) unlimited
-
-bash:~$ ulimit -Sa # for soft limits
-bash:~$ ulimit -Ha #for hard limits
-```
-With the above output, a particular resource can then be accessed and manipulated using it's corresponding switch. 
-Example: Modifying the cpu time will make use of the corresponding `-t` switch as such:
-
-```bash
-bash:~$ ulimit -t 16 # time in seconds
-```
-
-> NOTE: If the limit is set without precising whether it is soft or hard, it is taken as default to be both.
-The `-St` switch may be used for softlimit and `-Ht` for hard limit
-
-#### Dealing with Logged in User
-This done with commands like: `w`, `who`, `last`
-* `who` and `w` on their own are commands used to display the list of currently logged in users
-`who` supports additional flags such as: `-r` to diplay the current runlevel, `-b`to display the time of last system boot
-* `last` prints a listing of the last logged in users with the most recent information on top. To check for bad login attempts, run `lastb` or `last -b` instead of last.
-
