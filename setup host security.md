@@ -1,17 +1,20 @@
 # Setup host security
 
 **Introduction**
+
 &nbsp; &nbsp; In this section, we shall be introduced to basic tips to adopt in order to improve on host security. And on this path of our journey, we shall explore interesting checkpoints like:
 1. Scanning open ports in local and remote servers(computers), understanding associated services and checking and disactivaiting unnecessary services.
 1. Using superdaemons to to manage services.
 1. Very brief hover on TCP wrappers.
+   
 &nbsp; &nbsp; &nbsp; &nbsp;**OKAY.. Let's get started :grin:**
 #### 
 #### I. Scanning open ports in local and remote servers(computers), understanding associated services and checking services for unnecessary daemons.
 ***i. Scanning open ports in local and remote servers(computers).***
 
 To come about this task, linux provides with tools such as: `lsof`, `fuser`, `netstat` and `nmap`
-* *Using `fuser`*: 
+* *Using `fuser`*:
+  
 &nbsp; &nbsp; &nbsp; &nbsp; The command `fuser` or 'file user' provides information about what processes are accessing what files...
 The output may be difficult to interprete without the `-v` switch(for verbose) as seeen below:
 ```bash
@@ -37,7 +40,8 @@ The resultsl are self explainatory, but let's talk about the ACCESS culumn, here
 - F: Open file for writing (omitted in default display mode).
 - r: root directory.
 
-* *Using `lsof`*: 
+* *Using `lsof`*:
+  
 &nbsp; &nbsp; &nbsp; &nbsp;It stands for “list open files”. It has many switches to deal with different file types and usecases such as: `-u` for specified user, `-c` for files opened by a particular process name, `-P` for process id or port number... But we'll mostly use the `-i` for  listing information about open Internet sockets.
 Running the following will list all open files in the computer system.
 
@@ -57,6 +61,7 @@ A specific port can equally be specified
  bash:~$ sudo lsof -i :<port-number>
 ```
 - *using `netstat` and `ss`*
+  
 &nbsp; &nbsp; &nbsp; &nbsp; They basically perform the same tasks, with `ss` being a more recent version of `netstat`
 They can take switches like: `-l` for listening, `-t` for tcp, `-u` for udp, `-e` for additional informatio, `-n` for port number and ip addreses, and more.
 eg: scanning for TCP and UDP ports providing only the ip addresses and port numbers will take the following form:
@@ -104,6 +109,7 @@ bash:~$ nmap -p <port-range> <remote-server-ip>
 ```
 
 #### II. Using superdaemons(super servers) to to manage services.
+
 &nbsp; &nbsp; &nbsp; &nbsp; It is a deamon running for security and resource management purposes. It listens to requests it is configured for annd starts the target services when needed to answer requests. In other words, it registers all the required services to itself making sure to map the arriving services to the corresponding services
 &nbsp; &nbsp; &nbsp; &nbsp; Due to limmitted computational capabilities in the past, running system services as standalone processes wasn't feasible.. So this superdaemon had to listen to incoming network and start the appropriate services on demand. 
 &nbsp; &nbsp; &nbsp; &nbsp; This adds a layer of security to the communication system and lets other services be inactive when not needed. Examples include `inetd` and `xinetd`(newer version of inetd)
@@ -138,6 +144,7 @@ sudo systemctl start ssh.socket OR sudo systemctl start ssh.socket
 
 
 #### IV. TCP Wrappers
+
 These are tools that controls acces to network services bassed on the the source of incomming connections.
 In times when firewalls were not available, TCP wrapperswere used to secure network connection into a host. 
 This adds an additional layer of protection by defininng which hosts are allowed or not allowed to connect to a wrapped service.
