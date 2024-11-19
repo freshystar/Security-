@@ -114,8 +114,10 @@ bash:~$ nmap -p <port-range> <remote-server-ip>
 
 #### II. Using superdaemons(super servers) to to manage services.
 
-&nbsp; &nbsp; &nbsp; &nbsp; It is a deamon running for security and resource management purposes. It listens to requests it is configured for annd starts the target services when needed to answer requests. In other words, it registers all the required services to itself making sure to map the arriving services to the corresponding services
+&nbsp; &nbsp; &nbsp; &nbsp; It is a deamon running for security and resource management purposes. It listens to requests it is configured for and starts the target services when needed to answer requests. In other words, it registers all the required services to itself making sure to map the arriving services to the corresponding services
+
 &nbsp; &nbsp; &nbsp; &nbsp; Due to limmitted computational capabilities in the past, running system services as standalone processes wasn't feasible.. So this superdaemon had to listen to incoming network and start the appropriate services on demand. 
+
 &nbsp; &nbsp; &nbsp; &nbsp; This adds a layer of security to the communication system and lets other services be inactive when not needed. Examples include `inetd` and `xinetd`(newer version of inetd)
 Few linux distros use superdaemons like xinetd but some installations or traces of it may be found in /etc/xinetd. On current systems based on systemd the `systemd.socket` unit can be used in a similar way.
 
@@ -145,6 +147,15 @@ bash:~$  sudo systemctl restart xinetd.service
   Check which service is listening now for incoming SSH connections.
 Now you just have to start the SSH socket unit:
 sudo systemctl start ssh.socket OR sudo systemctl start ssh.socket
+
+>> Key differences beween systemd.sockets and superdaemons
+
+Super daemons are traditional, standalone processes that manage other daemons, whereas systemd sockets are a systemd-specific concept that integrates with the init system.
+
+Systemd sockets provide a more fine-grained and flexible way to manage processes, whereas super daemons are more coarse-grained and focused on managing groups of daemons.
+
+In summary, while both super daemons and systemd sockets enable on-demand process activation, systemd sockets offer a more modern, systemd-centric approach with greater configurability and integration with the init system.
+
 
 
 #### IV. TCP Wrappers
