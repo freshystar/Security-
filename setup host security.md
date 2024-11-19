@@ -98,7 +98,7 @@ bash:~$ nmap -p <port-range> <remote-server-ip>
 ```
 We can equally scan: multiple hosts(by separating them by spaces (e.g.: nmap localhost 192.168.1.7)). 
 Host ranges (by using a dash (e.g.: nmap 192.168.1.3-20)).
-Subnets (by using a wildcards (e.g.:   192.168.0.*)).
+Subnets (by using a wildcards (e.g.: nmap  192.168.0.*) or providing CIDR subnet mask notation (e.g.: nmap  192.168.0.1/24).
 * Scanning for particular ports
 ```bash
 bash:~$ nmap -p 22,80 localhost
