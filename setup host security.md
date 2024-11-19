@@ -46,13 +46,17 @@ The resultsl are self explainatory, but let's talk about the ACCESS culumn, here
 Running the following will list all open files in the computer system.
 
 ```bash
- bash:~$ lsof -i
+ bash:~$ sudo lsof -i
 ```
 
 A specific host can be specified with the @ip-address notation to check for its connections:
 > Prerequisites:
 - ssh access
 - root priviledges
+```bash
+ bash:~$ sudo lsof -i@<ip-address>
+```
+
 ```bash
  bash:~$ ssh <user-name>@[<remote-host-name> || <host's-ip-address>] 'lsof /path/to/directory'
 ```
