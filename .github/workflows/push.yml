@@ -13,4 +13,5 @@ jobs:
         run: |
             curl -H "Content-Type: application/json" \
             -X POST \
-            -d '{"content": "🚀 New push detected in the repository! Commit details: ${{ github.actor }} just pushed to ${{ github.ref }}."}' \"${{ secrets.WEBHOOK_ID }}"
+            -d '{"content": "🚀 New push detected in the repository! Commit details: ${{ github.actor }} just pushed to ${{ github.ref }}."}' \
+            "${{ secrets.WEBHOOK_ID }}"
